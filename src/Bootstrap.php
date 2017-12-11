@@ -5,7 +5,7 @@ namespace klisl\languages;
 use common\models\Lang;
 use yii\web\NotFoundHttpException;
 
-class Bootstrap implements \yii\base\BootstrapInterface;
+class Bootstrap implements \yii\base\BootstrapInterface
 {
     //Метод, который вызывается автоматически при каждом запросе
     public function bootstrap($app)

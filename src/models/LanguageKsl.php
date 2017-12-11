@@ -1,10 +1,10 @@
 <?php
 
-namespace satanicman\languages\models;
+namespace klisl\languages\models;
 
 use Yii;
 
-class LanguageSat
+class LanguageKsl
 {
     /**
     * Создает URL с меткой языка

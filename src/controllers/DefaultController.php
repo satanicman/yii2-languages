@@ -4,7 +4,7 @@ namespace klisl\languages\controllers;
 
 use Yii;
 use yii\web\Controller;
-use klisl\languages\models\LanguageSat;
+use klisl\languages\models\LanguageKsl;
 
 
 class DefaultController extends Controller
@@ -22,7 +22,7 @@ class DefaultController extends Controller
          * передаем URL предыдущей страницы в get параметрах
          */
         $url_referrer = Yii::$app->request->get('url');
-        
+
         /*
          * При перенаправлении сюда из виджета (нажатие по ссылке для смены языка)
          * получаем предыдущую страницу средствами Yii2
