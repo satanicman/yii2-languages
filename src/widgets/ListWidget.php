@@ -1,6 +1,6 @@
 <?php
 
-namespace satanicman\languages\widgets;
+namespace klisl\languages\widgets;
 
 use common\models\Lang;
 
