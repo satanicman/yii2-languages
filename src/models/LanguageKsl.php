@@ -3,6 +3,7 @@
 namespace klisl\languages\models;
 
 use Yii;
+use common\models\Lang;
 
 class LanguageKsl
 {
