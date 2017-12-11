@@ -28,6 +28,9 @@ class Bootstrap implements \yii\base\BootstrapInterface
     public function run($app){
         $module = Yii::$app->getModule('languages');
 
+        if(!property_exists($app->request, 'url'))
+            return true;
+
         $url = $app->request->url;
 
         //Получаем список языков в виде строки
