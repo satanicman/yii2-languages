@@ -33,7 +33,6 @@ class Bootstrap implements \yii\base\BootstrapInterface
         foreach (Lang::getLangs() as $lang) {
             $string_languages .= $lang->iso_code . '|';
         }
-        $string_languages = preg_replace('/\|$/', '', $string_languages);
 
         preg_match("#^/($string_languages)(.*)#", $url, $match_arr);
 
