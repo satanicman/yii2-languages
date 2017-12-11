@@ -24,7 +24,7 @@ class ListWidget extends \yii\base\Widget
 
     public function run()
     {
-        return $this->render('@app/modules/multilang/views/lang', [
+        return $this->render('list',[
             'langs' => $this->array_languages
         ]);
     }
