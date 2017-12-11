@@ -6,5 +6,4 @@ class Module extends \yii\base\Module
 {
 
     public $controllerNamespace = 'klisl\languages\controllers';
-
 }
