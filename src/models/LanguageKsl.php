@@ -22,7 +22,6 @@ class LanguageKsl
         foreach (Lang::getLangs() as $lang) {
             $string_languages .= $lang->iso_code . '|';
         }
-        $string_languages = preg_replace('/\|$/', '', $string_languages);
 
         $host = Yii::$app->request->hostInfo;
 
