@@ -2,11 +2,7 @@
 
 namespace klisl\languages;
 
-
-use yii\base\Module as BaseModule;
-
-
-class Module extends BaseModule
+class Module extends \yii\base\Module
 {
 
     public $controllerNamespace = 'klisl\languages\controllers';

@@ -2,8 +2,7 @@
 
 namespace klisl\languages;
 
-use Yii;
-
+use common\models\Lang;
 
 class Request extends \yii\web\Request
 {
@@ -11,26 +10,23 @@ class Request extends \yii\web\Request
 
     public function getLangUrl()
     {
-            $this->_lang_url = $this->getUrl(); //полный URL
+        if ($this->_lang_url === null) {
+            $this->_lang_url = $this->getUrl();
 
-            $url_list = explode('/', $this->getUrl());
+            $url_list = explode('/', $this->_lang_url);
 
             $lang_url = isset($url_list[1]) ? $url_list[1] : null;
 
-            //Удалить метку языка из URL
-            if( $lang_url !== null && $lang_url === Yii::$app->language )
+            if($lang_url !== null && $lang_url === Lang::getCurrent()->iso_code &&
+                strpos($this->_lang_url, Lang::getCurrent()->iso_code) === 1)
             {
-                $url = preg_replace("/^\/$lang_url/", '', $this->_lang_url);
-                return $url;
+                $this->_lang_url = substr($this->_lang_url, strlen(Lang::getCurrent()->iso_code)+1);
             }
+        }
 
         return $this->_lang_url;
     }
 
-    /*
-     * Переопределяем метод для того, чтобы он использовал URL без метки языка.
-     * Это позволит использовать обычные правила в UrlManager.
-     */
     protected function resolvePathInfo()
     {
         $pathInfo = $this->getLangUrl();

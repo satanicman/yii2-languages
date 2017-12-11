@@ -4,27 +4,33 @@
  */
 namespace klisl\languages;
 
-use Yii;
+use common\models\Lang;
 
-class UrlManager extends \yii\web\UrlManager {
+class UrlManager extends \yii\web\UrlManager
+{
+    public function createUrl($params)
+    {
+        if(isset($params['lang_id'])){
+            //Если указан идентификатор языка, то делаем попытку найти язык в БД,
+            //иначе работаем с языком по умолчанию
+            $lang = Lang::findOne($params['lang_id']);
+            if($lang === null){
+                $lang = Lang::getDefaultLang();
+            }
+            unset($params['lang_id']);
+        } else {
+            //Если не указан параметр языка, то работаем с текущим языком
+            $lang = Lang::getCurrent();
+        }
 
-    public function createUrl($params) {
-
-        //Получаем сформированную ссылку(без идентификатора языка)
+        //Получаем сформированный URL(без префикса идентификатора языка)
         $url = parent::createUrl($params);
 
-        if (empty($params['lang'])) {
-            //текущий язык приложения
-            $curentLang = Yii::$app->language;
-
-            //Добавляем к URL префикс - буквенный идентификатор языка
-            if ($url == '/') {
-                return '/' . $curentLang;
-            } else {
-                return '/' . $curentLang . $url;
-            }
-        };
-
-        return $url;
+        //Добавляем к URL префикс - буквенный идентификатор языка
+        if($url == '/'){
+            return '/'.$lang->iso_code;
+        }else{
+            return '/'.$lang->iso_code.$url;
+        }
     }
 }

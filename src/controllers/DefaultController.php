@@ -4,7 +4,7 @@ namespace klisl\languages\controllers;
 
 use Yii;
 use yii\web\Controller;
-use klisl\languages\models\LanguageKsl;
+use klisl\languages\models\LanguageSat;
 
 
 class DefaultController extends Controller
@@ -15,7 +15,6 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-
         $language = Yii::$app->request->get('lang'); //язык на который будем менять
 
         /*
@@ -23,6 +22,7 @@ class DefaultController extends Controller
          * передаем URL предыдущей страницы в get параметрах
          */
         $url_referrer = Yii::$app->request->get('url');
+        
         /*
          * При перенаправлении сюда из виджета (нажатие по ссылке для смены языка)
          * получаем предыдущую страницу средствами Yii2
@@ -37,9 +37,7 @@ class DefaultController extends Controller
         //устанавливает/меняет метку языка
         $url = LanguageKsl::parsingUrl($language, $url_referrer);
 
-
         // перенаправление
         Yii::$app->response->redirect($url);
     }
-
 }

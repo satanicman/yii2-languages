@@ -1,36 +1,11 @@
 <?php
 
-namespace klisl\languages\models;
+namespace satanicman\languages\models;
 
 use Yii;
 
-
-class LanguageKsl
+class LanguageSat
 {
-
-    static $list; //строка вида ru|uk|en|
-
-    /*
-     * Преобразование к строке вида ru|uk|en|
-     * для использования в регулярных выражениях
-     */
-    public static function list_languages(){
-
-        if(!self::$list){
-
-            $languages = Yii::$app->getModule('languages')->languages;
-            $list = '';
-
-            array_walk($languages, function ($value) use (&$list){
-                $list .= $value . '|';
-            });
-            self::$list = $list;
-        }
-
-        return self::$list;
-    }
-
-
     /**
     * Создает URL с меткой языка
     * Разбивает URL на подмассив $match_arr
@@ -39,12 +14,18 @@ class LanguageKsl
     * 2. ru или uk или en
     * 3. остальная часть
     */
-    public static function parsingUrl($language, $url_referrer){
+    public static function parsingUrl($language, $url_referrer)
+    {
+        //Получаем список языков в виде строки
+        $string_languages = '';
+        foreach (Lang::getLangs() as $lang) {
+            $string_languages .= $lang->iso_code . '|';
+        }
+        $string_languages = preg_replace('/\|$/', '', $string_languages);
 
-        $list_languages = self::list_languages(); //список языков
         $host = Yii::$app->request->hostInfo;
 
-        preg_match("#^($host)/($list_languages)(.*)#", $url_referrer, $match_arr);
+        preg_match("#^($host)/($string_languages)(.*)#", $url_referrer, $match_arr);
 
         //добавляем разделитель
         if (isset($match_arr[3]) && !empty($match_arr[3]) && !preg_match('#^\/#', $match_arr[3])){
@@ -53,16 +34,7 @@ class LanguageKsl
             $separator = '';
         }
 
-
-        $default_language = Yii::$app->getModule('languages')->default_language;
-        $show_default = Yii::$app->getModule('languages')->show_default;
-
-        //Удаляем основной язык из URL, если в настройках выбрано "не показывать"
-        if($language == $default_language && !$show_default){
-            $match_arr[2] = null;
-        } else {
-            $match_arr[2] = '/'.$language.$separator;
-        }
+        $match_arr[2] = '/'.$language.$separator;
 
         // создание нового URL
         $url = $match_arr[1].$match_arr[2].$match_arr[3];
