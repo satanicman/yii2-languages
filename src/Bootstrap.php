@@ -2,6 +2,7 @@
 
 namespace klisl\languages;
 
+use Yii;
 use common\models\Lang;
 use yii\web\NotFoundHttpException;
 
